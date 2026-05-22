@@ -18,6 +18,7 @@ var columnPattern = regexp.MustCompile(`^([A-Z]+)(\d+)$`)
 
 // CellNameToCoordinates converts a cell name (e.g. "A1") to column and row
 // coordinates. Returns an error if the cell name is invalid.
+// Note: input is trimmed and uppercased before parsing, so "a1" and " A1 " are accepted.
 func CellNameToCoordinates(cell string) (int, int, error) {
 	cell = strings.ToUpper(strings.TrimSpace(cell))
 	matches := columnPattern.FindStringSubmatch(cell)
@@ -49,6 +50,7 @@ func CoordinatesToCellName(col, row int) (string, error) {
 }
 
 // ColumnNameToNumber converts a column name (e.g. "A") to its number (1-based).
+// Both uppercase and lowercase letters are accepted.
 func ColumnNameToNumber(name string) (int, error) {
 	name = strings.ToUpper(strings.TrimSpace(name))
 	if name == "" {
