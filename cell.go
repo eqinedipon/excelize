@@ -64,10 +64,10 @@ func ColumnNameToNumber(name string) (int, error) {
 			return 0, fmt.Errorf("invalid character %q in column name", c)
 		}
 		col = col*26 + int(c-'A'+1)
-	}
-	// 16384 is the maximum column count in an Excel worksheet (column "XFD").
-	if col > 16384 {
-		return 0, fmt.Errorf("column name %q exceeds maximum allowed column (XFD / 16384)", name)
+		// Early exit: if col already exceeds the max, no need to continue.
+		if col > 16384 {
+			return 0, fmt.Errorf("column name %q exceeds maximum allowed column (XFD / 16384)", name)
+		}
 	}
 	return col, nil
 }
