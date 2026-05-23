@@ -31,7 +31,7 @@ func ExampleCoordinatesToCellName() {
 }
 
 // ExampleColumnNameToNumber demonstrates converting a column name to its
-// 1-based number.
+// 1-based number. Column names are case-insensitive (e.g. "aa" == "AA").
 func ExampleColumnNameToNumber() {
 	num, err := excelize.ColumnNameToNumber("AA")
 	if err != nil {
@@ -43,7 +43,7 @@ func ExampleColumnNameToNumber() {
 }
 
 // ExampleColumnNumberToName demonstrates converting a 1-based column number
-// to its name.
+// to its name. Column 1 => "A", column 26 => "Z", column 27 => "AA", etc.
 func ExampleColumnNumberToName() {
 	name, err := excelize.ColumnNumberToName(27)
 	if err != nil {
