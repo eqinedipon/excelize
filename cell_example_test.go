@@ -44,6 +44,7 @@ func ExampleColumnNameToNumber() {
 
 // ExampleColumnNumberToName demonstrates converting a 1-based column number
 // to its name. Column 1 => "A", column 26 => "Z", column 27 => "AA", etc.
+// Note: Excel supports a maximum of 16384 columns (column "XFD").
 func ExampleColumnNumberToName() {
 	name, err := excelize.ColumnNumberToName(27)
 	if err != nil {
