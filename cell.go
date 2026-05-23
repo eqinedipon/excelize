@@ -51,6 +51,8 @@ func CoordinatesToCellName(col, row int) (string, error) {
 
 // ColumnNameToNumber converts a column name (e.g. "A") to its number (1-based).
 // Both uppercase and lowercase letters are accepted.
+// Excel supports a maximum of 16384 columns (up to "XFD"); values beyond that
+// are technically invalid in a standard worksheet context.
 func ColumnNameToNumber(name string) (int, error) {
 	name = strings.ToUpper(strings.TrimSpace(name))
 	if name == "" {
@@ -63,12 +65,16 @@ func ColumnNameToNumber(name string) (int, error) {
 		}
 		col = col*26 + int(c-'A'+1)
 	}
+	// 16384 is the maximum column count in an Excel worksheet (column "XFD").
+	if col > 16384 {
+		return 0, fmt.Errorf("column name %q exceeds maximum allowed column (XFD / 16384)", name)
+	}
 	return col, nil
 }
 
 // ColumnNumberToName converts a 1-based column number to its name (e.g. 1 -> "A").
 func ColumnNumberToName(num int) (string, error) {
-	if num < 1 {
+	if num < 1 || num > 16384 {
 		return "", fmt.Errorf("invalid column number %d", num)
 	}
 	name := ""
