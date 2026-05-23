@@ -16,6 +16,9 @@ func TestColumnNameToNumber(t *testing.T) {
 		{"AZ", 52, false},
 		{"BA", 53, false},
 		{"XFD", 16384, false},
+		// lowercase input should also be handled gracefully
+		{"a", 1, false},
+		{"az", 52, false},
 		{"", 0, true},
 		{"1A", 0, true},
 	}
@@ -112,8 +115,10 @@ func TestCoordinatesToCellName(t *testing.T) {
 		{1, 1, "A1", false},
 		{26, 100, "Z100", false},
 		{27, 1, "AA1", false},
+		{16384, 1048576, "XFD1048576", false},
 		{0, 1, "", true},
 		{1, 0, "", true},
+		{-1, 1, "", true},
 	}
 	for _, tc := range cases {
 		got, err := CoordinatesToCellName(tc.col, tc.row)
