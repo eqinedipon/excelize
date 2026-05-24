@@ -49,6 +49,7 @@ func ExampleColumnNameToNumber() {
 // Note: This is useful when iterating over columns dynamically, e.g. in
 // report generators where the column count varies at runtime.
 // Note: The inverse of this function is ColumnNameToNumber.
+// Note: For reference, column 16384 maps to the name "XFD".
 func ExampleColumnNumberToName() {
 	name, err := excelize.ColumnNumberToName(27)
 	if err != nil {
