@@ -48,6 +48,7 @@ func ExampleColumnNameToNumber() {
 // Note: Passing a value <= 0 or > 16384 will return an error.
 // Note: This is useful when iterating over columns dynamically, e.g. in
 // report generators where the column count varies at runtime.
+// Note: The inverse of this function is ColumnNameToNumber.
 func ExampleColumnNumberToName() {
 	name, err := excelize.ColumnNumberToName(27)
 	if err != nil {
