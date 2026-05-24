@@ -73,6 +73,10 @@ func ColumnNameToNumber(name string) (int, error) {
 }
 
 // ColumnNumberToName converts a 1-based column number to its name (e.g. 1 -> "A").
+// The maximum valid column number is 16384 ("XFD"), matching Excel's limit.
+// Note: the loop decrements num before use so that column 26 maps to "Z"
+// rather than wrapping around to an empty string — this is the standard
+// bijective base-26 encoding used by spreadsheet applications.
 func ColumnNumberToName(num int) (string, error) {
 	if num < 1 || num > 16384 {
 		return "", fmt.Errorf("invalid column number %d", num)
