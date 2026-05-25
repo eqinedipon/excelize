@@ -19,6 +19,9 @@ func TestColumnNameToNumber(t *testing.T) {
 		// lowercase input should also be handled gracefully
 		{"a", 1, false},
 		{"az", 52, false},
+		// mixed case should also work
+		{"Az", 52, false},
+		{"aZ", 52, false},
 		{"", 0, true},
 		{"1A", 0, true},
 	}
