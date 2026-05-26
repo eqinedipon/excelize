@@ -24,6 +24,8 @@ func TestColumnNameToNumber(t *testing.T) {
 		{"aZ", 52, false},
 		{"", 0, true},
 		{"1A", 0, true},
+		// columns beyond the max supported (XFD / 16384) should return an error
+		{"XFE", 0, true},
 	}
 	for _, tc := range cases {
 		got, err := ColumnNameToNumber(tc.name)
@@ -55,6 +57,8 @@ func TestColumnNumberToName(t *testing.T) {
 		{16384, "XFD", false},
 		{0, "", true},
 		{-1, "", true},
+		// max column + 1 should also be an error
+		{16385, "", true},
 	}
 	for _, tc := range cases {
 		got, err := ColumnNumberToName(tc.num)
